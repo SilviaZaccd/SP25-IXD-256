@@ -1,0 +1,29 @@
+LumiLantern – Interactive Light Prototype
+Introduction
+LumiLantern is an interactive light prototype inspired by traditional Chinese lanterns. The concept was developed with the idea of integrating cultural heritage with modern UX, interactivity, and fabrication techniques.
+
+The project takes inspiration from the Lunar New Year, where lanterns symbolize hope, reunion, and celebration. The goal is to create a user-controlled light experience where the light behavior changes based on physical interactions such as folding, pressing, and twisting.
+
+Concept Sketches
+(Insert images of your initial sketches here.)
+
+State Diagram
+The LumiLantern prototype features three primary states, each activated by different user interactions. The state transitions are determined by the pressure and movement applied to the lantern.
+
+Interactive Behaviors
+Default State (Closed) – Off (No Light): Lantern remains folded, and no power is supplied to the LED strip.
+Press / Squeeze – Warm Glow (Yellow/Orange): A slight press activates the copper tape circuit, turning the light to a warm glow.
+Twist / Slightly Unfold – Dynamic Color Gradient: As the lantern unfolds slightly, the LED transitions into a dynamic gradient color mode.
+Fully Open – Slow Pulsing White Light: Expanding the lantern fully enables a slow pulsing white light, symbolizing a traditional glowing lantern.
+Flowchart Representation
+(Insert the state diagram image here.)
+
+Hardware
+The following components were used in the LumiLantern prototype:
+
+RGB LED Strip – Provides color-changing illumination.
+ESP32 Microcontroller – Controls the LED lighting behavior.
+Copper Tape – Used as capacitive touch sensors to detect user interaction.
+Resistors – Used to regulate electrical flow.
+Paper / Thin Acrylic – Forms the physical structure of the lantern.
+Hardware Wiring Diagram
