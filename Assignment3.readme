@@ -1,29 +1,50 @@
-LumiLantern – Interactive Light Prototype
-Introduction
-LumiLantern is an interactive light prototype inspired by traditional Chinese lanterns. The concept was developed with the idea of integrating cultural heritage with modern UX, interactivity, and fabrication techniques.
+# RGB LED (NeoPixel) strip with button input
+from machine import Pin
+from neopixel import NeoPixel
+from time import sleep_ms
 
-The project takes inspiration from the Lunar New Year, where lanterns symbolize hope, reunion, and celebration. The goal is to create a user-controlled light experience where the light behavior changes based on physical interactions such as folding, pressing, and twisting.
+print('NeoPixel LED + Button Example')
 
-Concept Sketches
-(Insert images of your initial sketches here.)
+# 按钮输入（使用 PULL_UP 模式）
+btn = Pin(1, Pin.IN, Pin.PULL_UP)
+btn_val_last = 1  # 记录上一次按钮状态
 
-State Diagram
-The LumiLantern prototype features three primary states, each activated by different user interactions. The state transitions are determined by the pressure and movement applied to the lantern.
+# 创建 NeoPixel 控制器（30 颗 LED，接在 GPIO 7）
+NUM_PIXELS = 30
+np = NeoPixel(Pin(7), NUM_PIXELS)
 
-Interactive Behaviors
-Default State (Closed) – Off (No Light): Lantern remains folded, and no power is supplied to the LED strip.
-Press / Squeeze – Warm Glow (Yellow/Orange): A slight press activates the copper tape circuit, turning the light to a warm glow.
-Twist / Slightly Unfold – Dynamic Color Gradient: As the lantern unfolds slightly, the LED transitions into a dynamic gradient color mode.
-Fully Open – Slow Pulsing White Light: Expanding the lantern fully enables a slow pulsing white light, symbolizing a traditional glowing lantern.
-Flowchart Representation
-(Insert the state diagram image here.)
+# 初始状态：红色
+program_state = 'RED'
+print('Starting with RED color.')
 
-Hardware
-The following components were used in the LumiLantern prototype:
+# 设置所有像素为红色
+for i in range(NUM_PIXELS):
+    np[i] = (255, 0, 0)  # 纯红色
+np.write()
 
-RGB LED Strip – Provides color-changing illumination.
-ESP32 Microcontroller – Controls the LED lighting behavior.
-Copper Tape – Used as capacitive touch sensors to detect user interaction.
-Resistors – Used to regulate electrical flow.
-Paper / Thin Acrylic – Forms the physical structure of the lantern.
-Hardware Wiring Diagram
+while True:
+    # 检测按钮按下（从高变低）
+    if btn.value() == 0 and btn_val_last == 1:  # 检测按键被按下
+        # 切换颜色状态
+        if program_state == 'RED':
+            program_state = 'YELLOW'
+        else:
+            program_state = 'RED'
+
+        print('Program state =', program_state)
+
+        # 更新 LED 颜色
+        color = (255, 255, 0) if program_state == 'YELLOW' else (255, 0, 0)
+
+        for i in range(NUM_PIXELS):
+                       np[i] = color
+        np.write()
+
+        # 按钮去抖动处理（避免一次按键触发多次）
+        sleep_ms(200)
+
+    # 更新上一次按钮状态
+    btn_val_last = btn.value()
+
+
+
